@@ -20,14 +20,16 @@ datasets:
   - name: year
     type: integer
     description: Calendar year, as published.
-  - name: source
+  - name: series_key
     type: string
-    description: 'Reporting series the value comes from, as EPA names it: National
-      Interagency Fire Center or Forest Service Wildfire Statistics. The two are not
-      directly comparable and do not cover the same years.'
-  - name: fires
+    description: Stable identifier for the series, safe to reference from chart code.
+  - name: series_label
+    type: string
+    description: The series as a legend should print it, in EPA's own wording.
+  - name: value
     type: number
-    description: Number of wildfires reported that year by that series.
+    description: Number of wildfires reported that year by that series. The two series
+      are not directly comparable and do not cover the same years.
 - file: wildfires_extent.csv
   figure: Figure 2
   figure_title: Figure 2. Wildfire Extent in the United States, 1983-2022
@@ -42,14 +44,16 @@ datasets:
   - name: year
     type: integer
     description: Calendar year, as published.
-  - name: source
+  - name: series_key
     type: string
-    description: 'Reporting series the value comes from, as EPA names it: National
-      Interagency Fire Center or Forest Service Wildfire Statistics. The two are not
-      directly comparable and do not cover the same years.'
-  - name: acres
+    description: Stable identifier for the series, safe to reference from chart code.
+  - name: series_label
+    type: string
+    description: The series as a legend should print it, in EPA's own wording.
+  - name: value
     type: number
-    description: Burned area in acres.
+    description: Wildfire-burned area in acres for that year, from that series. The
+      two series are not directly comparable and do not cover the same years.
 - file: wildfires_burn_severity.csv
   figure: Figure 3
   figure_title: Figure 3. Damage Caused by Wildfires in the United States, 1984-2021
@@ -64,13 +68,15 @@ datasets:
   - name: year
     type: integer
     description: Calendar year, as published.
-  - name: severity
+  - name: series_key
     type: string
-    description: 'Burn-severity class assigned by MTBS: Low, Moderate, High, Unburned,
-      or Increased greenness.'
-  - name: acres
+    description: Stable identifier for the series, safe to reference from chart code.
+  - name: series_label
+    type: string
+    description: The series as a legend should print it, in EPA's own wording.
+  - name: value
     type: number
-    description: Burned area in acres.
+    description: Burned area in acres falling in that MTBS severity class that year.
 - file: wildfires_burned_acreage_trend_by_state.csv
   figure: Figure 4
   figure_title: Figure 4. Average Annual Burned Acreage by State, 1984-2021
@@ -86,7 +92,7 @@ datasets:
     type: string
     description: U.S. state. Two-letter postal abbreviation where the source uses
       one, full name where it does not.
-  - name: acres_per_sq_mi
+  - name: value
     type: number
     description: Trend in annual burned acreage over 1984-2021, in acres per square
       mile of land area.
@@ -108,9 +114,9 @@ datasets:
   - name: year
     type: integer
     description: Calendar year, as published.
-  - name: acres
+  - name: value
     type: number
-    description: Burned area in acres.
+    description: Burned acreage in that state that year, in acres.
 - file: wildfires_burned_acreage_change_by_state.csv
   figure: Figure 5
   figure_title: Figure 5. Change in Annual Burned Acreage by State Between 1984-2002
@@ -127,7 +133,7 @@ datasets:
     type: string
     description: U.S. state. Two-letter postal abbreviation where the source uses
       one, full name where it does not.
-  - name: change_acres_per_sq_mi
+  - name: value
     type: number
     description: Change in average annual burned acreage between 1984-2002 and 2003-2021,
       in acres per square mile of land area. Negative values are decreases.
@@ -146,12 +152,16 @@ datasets:
   - name: month
     type: string
     description: Calendar month name, in January-to-December order.
-  - name: period
+  - name: series_key
     type: string
-    description: Multi-year period the value averages over, 1984-2002 or 2003-2021.
-  - name: million_acres
+    description: Stable identifier for the series, safe to reference from chart code.
+  - name: series_label
+    type: string
+    description: The series as a legend should print it, in EPA's own wording.
+  - name: value
     type: number
-    description: Average burned area for that month, in millions of acres per year.
+    description: Average burned area for that month over that period, in millions
+      of acres per year.
 - file: wildfires_monthly_burned_area_by_region.csv
   figure: Figure 7
   figure_title: Figure 7. Comparison of Monthly Burned Area Due to Wildfires in the
@@ -170,9 +180,13 @@ datasets:
   - name: region
     type: string
     description: Half of the country the value covers, East or West.
-  - name: period
+  - name: series_key
     type: string
-    description: Multi-year period the value averages over, 1984-2002 or 2003-2021.
-  - name: million_acres
+    description: Stable identifier for the series, safe to reference from chart code.
+  - name: series_label
+    type: string
+    description: The series as a legend should print it, in EPA's own wording.
+  - name: value
     type: number
-    description: Average burned area for that month, in millions of acres per year.
+    description: Average burned area for that month over that period, in millions
+      of acres per year, for that half of the country.

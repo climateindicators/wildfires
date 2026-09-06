@@ -1,191 +1,191 @@
-year,severity,acres
-1984,Low,711517.381
-1985,Low,1568280.833
-1986,Low,987523.3908
-1987,Low,1092490.42
-1988,Low,1608268.093
-1989,Low,836317.8049
-1990,Low,945165.6244
-1991,Low,875286.9411
-1992,Low,668200.2032
-1993,Low,657085.7986
-1994,Low,1336230.497
-1995,Low,658099.0295
-1996,Low,2471947.135
-1997,Low,308032.2014
-1998,Low,867085.4641
-1999,Low,2512574.225
-2000,Low,2612716.176
-2001,Low,1211279.289
-2002,Low,1923555.037
-2003,Low,1155777.543
-2004,Low,1911788.348
-2005,Low,2795213.383
-2006,Low,3596274.934
-2007,Low,2882533.16
-2008,Low,1772242.701
-2009,Low,1408486.136
-2010,Low,1134233.932
-2011,Low,4608988.766
-2012,Low,3812837.471
-2013,Low,1363011.951
-2014,Low,1469241.294
-2015,Low,2991384.76
-2016,Low,2352618.737
-2017,Low,5175922.145
-2018,Low,3957293.374
-2019,Low,2053493.004
-2020,Low,4476422.092
-2021,Low,3143221.947
-1984,Moderate,165303.1949
-1985,Moderate,702452.1224
-1986,Moderate,415182.0363
-1987,Moderate,421079.9475
-1988,Moderate,877753.5223
-1989,Moderate,234073.0175
-1990,Moderate,579664.5942
-1991,Moderate,417018.7953
-1992,Moderate,205778.6114
-1993,Moderate,341604.7044
-1994,Moderate,709298.3253
-1995,Moderate,312745.1929
-1996,Moderate,1109685.322
-1997,Moderate,96326.32271
-1998,Moderate,228466.2212
-1999,Moderate,1077772.997
-2000,Moderate,1246627.393
-2001,Moderate,528657.4477
-2002,Moderate,1603890.695
-2003,Moderate,787845.7371
-2004,Moderate,2001069.869
-2005,Moderate,2066900.077
-2006,Moderate,1751958.068
-2007,Moderate,1678553.981
-2008,Moderate,798868.9598
-2009,Moderate,921464.7837
-2010,Moderate,411757.1557
-2011,Moderate,1480142.199
-2012,Moderate,1530226.407
-2013,Moderate,948714.1565
-2014,Moderate,576968.2792
-2015,Moderate,2299623.38
-2016,Moderate,778266.0793
-2017,Moderate,1557907.893
-2018,Moderate,1827183.345
-2019,Moderate,1183998.559
-2020,Moderate,2252327.559
-2021,Moderate,1449090.764
-1984,High,58694.6691
-1985,High,247654.8929
-1986,High,107691.3663
-1987,High,201225.9666
-1988,High,819879.7125
-1989,High,142001.3306
-1990,High,464195.4131
-1991,High,157884.9926
-1992,High,110842.7012
-1993,High,113911.3053
-1994,High,370841.3975
-1995,High,64177.59153
-1996,High,352752.4682
-1997,High,29375.2451
-1998,High,120345.6328
-1999,High,440199.6769
-2000,High,839605.6902
-2001,High,224364.3707
-2002,High,1111011.908
-2003,High,635284.2099
-2004,High,734911.984
-2005,High,1559040.995
-2006,High,636276.0909
-2007,High,1185020.908
-2008,High,296170.5501
-2009,High,578122.7308
-2010,High,207297.1234
-2011,High,411397.5433
-2012,High,680169.0489
-2013,High,669574.381
-2014,High,367597.3239
-2015,High,1972690.731
-2016,High,377997.8411
-2017,High,824142.7993
-2018,High,688837.555
-2019,High,316859.7199
-2020,High,1602474.93
-2021,High,1005343.445
-1984,Unburned,277213.6138
-1985,Unburned,541103.3302
-1986,Unburned,283267.6462
-1987,Unburned,532639.4273
-1988,Unburned,1024000.815
-1989,Unburned,217759.0215
-1990,Unburned,365839.7375
-1991,Unburned,342562.7813
-1992,Unburned,313789.1143
-1993,Unburned,223843.2996
-1994,Unburned,691702.0006
-1995,Unburned,197470.3849
-1996,Unburned,871746.1928
-1997,Unburned,127662.2007
-1998,Unburned,296354.6931
-1999,Unburned,900275.8927
-2000,Unburned,1412897.115
-2001,Unburned,530536.0169
-2002,Unburned,1019392.572
-2003,Unburned,749563.1338
-2004,Unburned,1177343.615
-2005,Unburned,1455243.762
-2006,Unburned,1423822.262
-2007,Unburned,1656593.603
-2008,Unburned,756043.9419
-2009,Unburned,516777.7824
-2010,Unburned,297822.9438
-2011,Unburned,1084386.13
-2012,Unburned,1250943.632
-2013,Unburned,473138.5769
-2014,Unburned,378906.324
-2015,Unburned,1157741.512
-2016,Unburned,586318.8703
-2017,Unburned,1224119.255
-2018,Unburned,855146.6418
-2019,Unburned,508646.5822
-2020,Unburned,1247573.683
-2021,Unburned,1106932.519
-1984,Increased greenness,16309.32574
-1985,Increased greenness,60753.82294
-1986,Increased greenness,20180.99754
-1987,Increased greenness,35363.89341
-1988,Increased greenness,252230.4444
-1989,Increased greenness,7593.894275
-1990,Increased greenness,224350.8046
-1991,Increased greenness,71042.9203
-1992,Increased greenness,13384.38878
-1993,Increased greenness,23931.68655
-1994,Increased greenness,37818.68767
-1995,Increased greenness,6420.761483
-1996,Increased greenness,24526.81515
-1997,Increased greenness,23783.57159
-1998,Increased greenness,28456.30961
-1999,Increased greenness,53582.25647
-2000,Increased greenness,69484.82204
-2001,Increased greenness,16996.5258
-2002,Increased greenness,172945.7937
-2003,Increased greenness,89736.76354
-2004,Increased greenness,1114651.622
-2005,Increased greenness,876246.13
-2006,Increased greenness,72508.9471
-2007,Increased greenness,143812.0694
-2008,Increased greenness,15080.59424
-2009,Increased greenness,41525.3425
-2010,Increased greenness,112460.4013
-2011,Increased greenness,71711.66159
-2012,Increased greenness,49549.5708
-2013,Increased greenness,134060.2779
-2014,Increased greenness,44654.43793
-2015,Increased greenness,525882.6272
-2016,Increased greenness,56551.89479
-2017,Increased greenness,67491.94186
-2018,Increased greenness,23473.10839
-2019,Increased greenness,103082.0108
-2020,Increased greenness,40062.20684
-2021,Increased greenness,29433.95734
+year,series_key,series_label,value
+1984,low,Low,711517.381
+1985,low,Low,1568280.833
+1986,low,Low,987523.3908
+1987,low,Low,1092490.42
+1988,low,Low,1608268.093
+1989,low,Low,836317.8049
+1990,low,Low,945165.6244
+1991,low,Low,875286.9411
+1992,low,Low,668200.2032
+1993,low,Low,657085.7986
+1994,low,Low,1336230.497
+1995,low,Low,658099.0295
+1996,low,Low,2471947.135
+1997,low,Low,308032.2014
+1998,low,Low,867085.4641
+1999,low,Low,2512574.225
+2000,low,Low,2612716.176
+2001,low,Low,1211279.289
+2002,low,Low,1923555.037
+2003,low,Low,1155777.543
+2004,low,Low,1911788.348
+2005,low,Low,2795213.383
+2006,low,Low,3596274.934
+2007,low,Low,2882533.16
+2008,low,Low,1772242.701
+2009,low,Low,1408486.136
+2010,low,Low,1134233.932
+2011,low,Low,4608988.766
+2012,low,Low,3812837.471
+2013,low,Low,1363011.951
+2014,low,Low,1469241.294
+2015,low,Low,2991384.76
+2016,low,Low,2352618.737
+2017,low,Low,5175922.145
+2018,low,Low,3957293.374
+2019,low,Low,2053493.004
+2020,low,Low,4476422.092
+2021,low,Low,3143221.947
+1984,moderate,Moderate,165303.1949
+1985,moderate,Moderate,702452.1224
+1986,moderate,Moderate,415182.0363
+1987,moderate,Moderate,421079.9475
+1988,moderate,Moderate,877753.5223
+1989,moderate,Moderate,234073.0175
+1990,moderate,Moderate,579664.5942
+1991,moderate,Moderate,417018.7953
+1992,moderate,Moderate,205778.6114
+1993,moderate,Moderate,341604.7044
+1994,moderate,Moderate,709298.3253
+1995,moderate,Moderate,312745.1929
+1996,moderate,Moderate,1109685.322
+1997,moderate,Moderate,96326.32271
+1998,moderate,Moderate,228466.2212
+1999,moderate,Moderate,1077772.997
+2000,moderate,Moderate,1246627.393
+2001,moderate,Moderate,528657.4477
+2002,moderate,Moderate,1603890.695
+2003,moderate,Moderate,787845.7371
+2004,moderate,Moderate,2001069.869
+2005,moderate,Moderate,2066900.077
+2006,moderate,Moderate,1751958.068
+2007,moderate,Moderate,1678553.981
+2008,moderate,Moderate,798868.9598
+2009,moderate,Moderate,921464.7837
+2010,moderate,Moderate,411757.1557
+2011,moderate,Moderate,1480142.199
+2012,moderate,Moderate,1530226.407
+2013,moderate,Moderate,948714.1565
+2014,moderate,Moderate,576968.2792
+2015,moderate,Moderate,2299623.38
+2016,moderate,Moderate,778266.0793
+2017,moderate,Moderate,1557907.893
+2018,moderate,Moderate,1827183.345
+2019,moderate,Moderate,1183998.559
+2020,moderate,Moderate,2252327.559
+2021,moderate,Moderate,1449090.764
+1984,high,High,58694.6691
+1985,high,High,247654.8929
+1986,high,High,107691.3663
+1987,high,High,201225.9666
+1988,high,High,819879.7125
+1989,high,High,142001.3306
+1990,high,High,464195.4131
+1991,high,High,157884.9926
+1992,high,High,110842.7012
+1993,high,High,113911.3053
+1994,high,High,370841.3975
+1995,high,High,64177.59153
+1996,high,High,352752.4682
+1997,high,High,29375.2451
+1998,high,High,120345.6328
+1999,high,High,440199.6769
+2000,high,High,839605.6902
+2001,high,High,224364.3707
+2002,high,High,1111011.908
+2003,high,High,635284.2099
+2004,high,High,734911.984
+2005,high,High,1559040.995
+2006,high,High,636276.0909
+2007,high,High,1185020.908
+2008,high,High,296170.5501
+2009,high,High,578122.7308
+2010,high,High,207297.1234
+2011,high,High,411397.5433
+2012,high,High,680169.0489
+2013,high,High,669574.381
+2014,high,High,367597.3239
+2015,high,High,1972690.731
+2016,high,High,377997.8411
+2017,high,High,824142.7993
+2018,high,High,688837.555
+2019,high,High,316859.7199
+2020,high,High,1602474.93
+2021,high,High,1005343.445
+1984,unburned,Unburned,277213.6138
+1985,unburned,Unburned,541103.3302
+1986,unburned,Unburned,283267.6462
+1987,unburned,Unburned,532639.4273
+1988,unburned,Unburned,1024000.815
+1989,unburned,Unburned,217759.0215
+1990,unburned,Unburned,365839.7375
+1991,unburned,Unburned,342562.7813
+1992,unburned,Unburned,313789.1143
+1993,unburned,Unburned,223843.2996
+1994,unburned,Unburned,691702.0006
+1995,unburned,Unburned,197470.3849
+1996,unburned,Unburned,871746.1928
+1997,unburned,Unburned,127662.2007
+1998,unburned,Unburned,296354.6931
+1999,unburned,Unburned,900275.8927
+2000,unburned,Unburned,1412897.115
+2001,unburned,Unburned,530536.0169
+2002,unburned,Unburned,1019392.572
+2003,unburned,Unburned,749563.1338
+2004,unburned,Unburned,1177343.615
+2005,unburned,Unburned,1455243.762
+2006,unburned,Unburned,1423822.262
+2007,unburned,Unburned,1656593.603
+2008,unburned,Unburned,756043.9419
+2009,unburned,Unburned,516777.7824
+2010,unburned,Unburned,297822.9438
+2011,unburned,Unburned,1084386.13
+2012,unburned,Unburned,1250943.632
+2013,unburned,Unburned,473138.5769
+2014,unburned,Unburned,378906.324
+2015,unburned,Unburned,1157741.512
+2016,unburned,Unburned,586318.8703
+2017,unburned,Unburned,1224119.255
+2018,unburned,Unburned,855146.6418
+2019,unburned,Unburned,508646.5822
+2020,unburned,Unburned,1247573.683
+2021,unburned,Unburned,1106932.519
+1984,increased_greenness,Increased greenness,16309.32574
+1985,increased_greenness,Increased greenness,60753.82294
+1986,increased_greenness,Increased greenness,20180.99754
+1987,increased_greenness,Increased greenness,35363.89341
+1988,increased_greenness,Increased greenness,252230.4444
+1989,increased_greenness,Increased greenness,7593.894275
+1990,increased_greenness,Increased greenness,224350.8046
+1991,increased_greenness,Increased greenness,71042.9203
+1992,increased_greenness,Increased greenness,13384.38878
+1993,increased_greenness,Increased greenness,23931.68655
+1994,increased_greenness,Increased greenness,37818.68767
+1995,increased_greenness,Increased greenness,6420.761483
+1996,increased_greenness,Increased greenness,24526.81515
+1997,increased_greenness,Increased greenness,23783.57159
+1998,increased_greenness,Increased greenness,28456.30961
+1999,increased_greenness,Increased greenness,53582.25647
+2000,increased_greenness,Increased greenness,69484.82204
+2001,increased_greenness,Increased greenness,16996.5258
+2002,increased_greenness,Increased greenness,172945.7937
+2003,increased_greenness,Increased greenness,89736.76354
+2004,increased_greenness,Increased greenness,1114651.622
+2005,increased_greenness,Increased greenness,876246.13
+2006,increased_greenness,Increased greenness,72508.9471
+2007,increased_greenness,Increased greenness,143812.0694
+2008,increased_greenness,Increased greenness,15080.59424
+2009,increased_greenness,Increased greenness,41525.3425
+2010,increased_greenness,Increased greenness,112460.4013
+2011,increased_greenness,Increased greenness,71711.66159
+2012,increased_greenness,Increased greenness,49549.5708
+2013,increased_greenness,Increased greenness,134060.2779
+2014,increased_greenness,Increased greenness,44654.43793
+2015,increased_greenness,Increased greenness,525882.6272
+2016,increased_greenness,Increased greenness,56551.89479
+2017,increased_greenness,Increased greenness,67491.94186
+2018,increased_greenness,Increased greenness,23473.10839
+2019,increased_greenness,Increased greenness,103082.0108
+2020,increased_greenness,Increased greenness,40062.20684
+2021,increased_greenness,Increased greenness,29433.95734
