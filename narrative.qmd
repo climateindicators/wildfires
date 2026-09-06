@@ -84,7 +84,9 @@ The total area and total number of fires are tracked by the National Interagency
 
 Although some nationwide fire data have been collected since the early 1900s, this indicator starts in 1983 (Figures 1 and 2) and 1984 (Figures 3 through 7), when nationwide data collection became more complete and standardized. EPA divided the time period in Figures 5, 6, and 7 into two roughly equal halves to compare changes in wildfire characteristics over time.
 
-## Indicator Notes
+## About the Data
+
+### Indicator Notes
 
 Many environmental impacts associated with climate change can affect the severity and timing of the wildfire season, including changes in temperature, precipitation, and drought. Short-term weather conditions (dryness, temperature, wind, lightning) influence the likelihood of ignition, where and how quickly a fire spreads, and how big it gets. Longer-term climate patterns also play a role by creating conditions that may be conducive to wildfire (for example, a multi-year regional drought). Human activities and land management practices also affect wildfire activity, and preferred practices in wildfire management have evolved over time, from older policies that favored complete wildfire prevention to more recent policies of wildfire suppression and controlled burns. Resources available to fight and manage wildfires can also influence the amount of area burned over time.
 
@@ -92,7 +94,7 @@ While this indicator is limited to “wildland” fires, it includes fires that 
 
 Along with the influence of ongoing climate change, wildfire patterns can be influenced by natural climate cycles that tend to shift every few decades. Thus, with less than four decades of data shown here, it might be challenging to draw conclusions about long-term trends. While a longer record would be ideal, data from before 1983 are not consistent or detailed enough nationally to be included in this indicator.
 
-## Data Sources
+### Data Sources
 
 The full set of wildfire frequency and burned acreage data in Figures 1 and 2 comes from the National Interagency Fire Center, which compiles wildfire reports sent from local, state, and federal entities that are involved in fighting fires. These data are available online at: [www.nifc.gov/fire-information/statistics](https://www.nifc.gov/fire-information/statistics). Additional data were provided by the U.S. Forest Service based on a different set of records, referred to as Smokey Bear Reports. Burn severity data, state-by-state acreage totals, and monthly acreage data in Figures 3 through 7 come from the MTBS multi-agency project, which maintains a database of wildfire events across the United States. These data are publicly available at: [www.mtbs.gov/direct-download](https://www.mtbs.gov/direct-download).
 
