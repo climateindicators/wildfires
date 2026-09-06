@@ -1,0 +1,178 @@
+indicator:
+  name: Wildfires
+  slug: wildfires
+  publisher: U.S. Environmental Protection Agency
+  source_page: https://19january2025snapshot.epa.gov/climate-indicators/climate-change-indicators-wildfires/index.html
+  technical_documentation: https://19january2025snapshot.epa.gov/system/files/documents/2024-06/wildfires_documentation.pdf
+  rights: Public domain, work of the U.S. Government (17 U.S.C. 105)
+datasets:
+- file: wildfires_frequency.csv
+  figure: Figure 1
+  figure_title: Figure 1. Wildfire Frequency in the United States, 1983-2022
+  source_file: wildfires_fig-1.csv
+  source_sha256: 1b63039a77eee4c7c188c6ccbbf7d8c0cfa4e08a1a97fe543c5fd6bd140f729e
+  source_encoding: UTF-8
+  data_source: NIFC, 2024; USDA Forest Service, 2014
+  web_update: June 2024
+  unit: number of fires
+  rows: 55
+  columns:
+  - name: year
+    type: integer
+    description: Calendar year, as published.
+  - name: source
+    type: string
+    description: 'Reporting series the value comes from, as EPA names it: National
+      Interagency Fire Center or Forest Service Wildfire Statistics. The two are not
+      directly comparable and do not cover the same years.'
+  - name: fires
+    type: number
+    description: Number of wildfires reported that year by that series.
+- file: wildfires_extent.csv
+  figure: Figure 2
+  figure_title: Figure 2. Wildfire Extent in the United States, 1983-2022
+  source_file: wildfires_fig-2.csv
+  source_sha256: a6054e278a8e37c27ace874ed9f63e6ae058c491dfe9cd19726853c044c8dff8
+  source_encoding: UTF-8
+  data_source: NIFC, 2024; Short, 2015
+  web_update: June 2024
+  unit: acres
+  rows: 55
+  columns:
+  - name: year
+    type: integer
+    description: Calendar year, as published.
+  - name: source
+    type: string
+    description: 'Reporting series the value comes from, as EPA names it: National
+      Interagency Fire Center or Forest Service Wildfire Statistics. The two are not
+      directly comparable and do not cover the same years.'
+  - name: acres
+    type: number
+    description: Burned area in acres.
+- file: wildfires_burn_severity.csv
+  figure: Figure 3
+  figure_title: Figure 3. Damage Caused by Wildfires in the United States, 1984-2021
+  source_file: wildfires_fig-3.csv
+  source_sha256: 94b4ff6434489ed03aabed018471f057eafcf7d41944024f27385867ef018281
+  source_encoding: UTF-8
+  data_source: MTBS, 2024
+  web_update: June 2024
+  unit: acres
+  rows: 190
+  columns:
+  - name: year
+    type: integer
+    description: Calendar year, as published.
+  - name: severity
+    type: string
+    description: 'Burn-severity class assigned by MTBS: Low, Moderate, High, Unburned,
+      or Increased greenness.'
+  - name: acres
+    type: number
+    description: Burned area in acres.
+- file: wildfires_burned_acreage_trend_by_state.csv
+  figure: Figure 4
+  figure_title: Figure 4. Average Annual Burned Acreage by State, 1984-2021
+  source_file: wildfires_fig-4.csv
+  source_sha256: 35147acc27572909b963833ae85d264bc5c460e1abb7e49bf80e30212b4caa3d
+  source_encoding: UTF-8
+  data_source: MTBS, 2024
+  web_update: June 2024
+  unit: acres per square mile of land area
+  rows: 45
+  columns:
+  - name: state
+    type: string
+    description: U.S. state. Two-letter postal abbreviation where the source uses
+      one, full name where it does not.
+  - name: acres_per_sq_mi
+    type: number
+    description: Trend in annual burned acreage over 1984-2021, in acres per square
+      mile of land area.
+- file: wildfires_burned_acreage_by_state.csv
+  figure: Figure 4
+  figure_title: Figure 4. Average Annual Burned Acreage by State, 1984-2021
+  source_file: wildfires_fig-4.csv
+  source_sha256: 35147acc27572909b963833ae85d264bc5c460e1abb7e49bf80e30212b4caa3d
+  source_encoding: UTF-8
+  data_source: MTBS, 2024
+  web_update: June 2024
+  unit: acres
+  rows: 1710
+  columns:
+  - name: state
+    type: string
+    description: U.S. state. Two-letter postal abbreviation where the source uses
+      one, full name where it does not.
+  - name: year
+    type: integer
+    description: Calendar year, as published.
+  - name: acres
+    type: number
+    description: Burned area in acres.
+- file: wildfires_burned_acreage_change_by_state.csv
+  figure: Figure 5
+  figure_title: Figure 5. Change in Annual Burned Acreage by State Between 1984-2002
+    and 2003-2021
+  source_file: wildfires_fig-5.csv
+  source_sha256: df6cae8eb94f6ae8cf2306ca6dbe7f9dcfbfae636def89c8169fb93cb07495bb
+  source_encoding: UTF-8
+  data_source: MTBS, 2024
+  web_update: June 2024
+  unit: acres per square mile of land area
+  rows: 45
+  columns:
+  - name: state
+    type: string
+    description: U.S. state. Two-letter postal abbreviation where the source uses
+      one, full name where it does not.
+  - name: change_acres_per_sq_mi
+    type: number
+    description: Change in average annual burned acreage between 1984-2002 and 2003-2021,
+      in acres per square mile of land area. Negative values are decreases.
+- file: wildfires_monthly_burned_area.csv
+  figure: Figure 6
+  figure_title: Figure 6. Comparison of Monthly Burned Area Due to Wildfires in the
+    United States Between 1984–2002 and 2003–2021
+  source_file: wildfires_fig-6.csv
+  source_sha256: 2845031395c0b404b698ff655683df381376c588857b771600548125632b615c
+  source_encoding: UTF-8-BOM
+  data_source: MTBS, 2023
+  web_update: June 2024
+  unit: burned area (millions of acres per year)
+  rows: 24
+  columns:
+  - name: month
+    type: string
+    description: Calendar month name, in January-to-December order.
+  - name: period
+    type: string
+    description: Multi-year period the value averages over, 1984-2002 or 2003-2021.
+  - name: million_acres
+    type: number
+    description: Average burned area for that month, in millions of acres per year.
+- file: wildfires_monthly_burned_area_by_region.csv
+  figure: Figure 7
+  figure_title: Figure 7. Comparison of Monthly Burned Area Due to Wildfires in the
+    Eastern and Western United States Between 1984-2002 and 2003-2021
+  source_file: wildfires_fig-7.csv
+  source_sha256: 5326d82e6fee79741760fe39ca66dd7d1139efeb5db5c0e69d97bcbaf7da1317
+  source_encoding: UTF-8-BOM
+  data_source: MTBS, 2023
+  web_update: June 2024
+  unit: burned area (millions of acres per year)
+  rows: 48
+  columns:
+  - name: month
+    type: string
+    description: Calendar month name, in January-to-December order.
+  - name: region
+    type: string
+    description: Half of the country the value covers, East or West.
+  - name: period
+    type: string
+    description: Multi-year period the value averages over, 1984-2002 or 2003-2021.
+  - name: million_acres
+    type: number
+    description: Average burned area for that month, in millions of acres per year.

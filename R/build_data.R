@@ -6,15 +6,17 @@
 # data/meta.yml. Rerunning with unchanged inputs produces byte-identical output.
 # Nothing here touches the network.
 #
-# Generated as a stub by the build-indicator skill. Each figure below has a
-# `todo_reshape()` call standing where its reshape belongs. Replace that line,
-# then delete the todo_reshape() helper once no call to it remains.
-#
 # TO UPDATE THE DATA: drop replacement CSVs into data-raw/ and rerun. Headers
 # are asserted, not assumed, so a renamed or reordered column stops the build.
+#
+# Row order is set with match() against an explicit level vector everywhere, so
+# no output depends on the machine's collation locale. Values stay character
+# from source to output: EPA publishes up to 10 significant digits and they must
+# survive byte for byte.
 
 suppressPackageStartupMessages({
   library(dplyr)
+  library(tidyr)
 })
 
 root <- here::here()
@@ -24,15 +26,6 @@ source(file.path(root, "R/utils/write_stable.R"))
 raw_dir <- file.path(root, "data-raw")
 out_dir <- file.path(root, "data")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
-
-todo_reshape <- function(n) {
-  stop(
-    "R/build_data.R: the reshape for figure ", n, " has not been written yet.\n",
-    "Replace the todo_reshape(", n, ") call with the pivot that produces the tidy\n",
-    "long-format data frame for that figure, then remove this helper.",
-    call. = FALSE
-  )
-}
 
 # ---- Indicator constants -----------------------------------------------------
 
@@ -51,26 +44,30 @@ f1_path <- file.path(raw_dir, "wildfires_fig-1.csv")
 f1_meta <- read_epa_preamble(f1_path)
 f1_raw  <- read_epa_csv(f1_path)
 
-# All columns are listed as expected headers so a rename or reorder stops the
-# build from the first run. When you write the reshape, move the identifier
-# columns into id_cols so the split between keys and series is explicit.
+f1_series <- c("National Interagency Fire Center", "Forest Service Wildfire Statistics")
+
 assert_headers(
   f1_raw,
-  id_cols          = character(),
-  expected_headers = c("Year", "National Interagency Fire Center", "Forest Service Wildfire Statistics"),
+  id_cols          = "Year",
+  expected_headers = f1_series,
   what             = "wildfires_fig-1.csv"
 )
 
-# TODO reshape: 40 rows, Year + 2 series.
-# Source headers: Year | National Interagency Fire Center | Forest Service Wildfire Statistics
-# Units line: number of fires
-# Produce a tidy long-format data frame. Keep every value as character: the
-# source carries up to 10 significant digits and must survive byte for byte.
-f1 <- todo_reshape(1)
+# The two series do not cover the same years: EPA prints the Forest Service
+# counts only where that record runs, leaving the rest of the column empty. A
+# blank here is "this series does not report that year", not a missing value, so
+# the blanks are dropped rather than carried as NA, and the output is one row per
+# value EPA actually published. assert_conservation() holds those counts equal.
+f1 <- f1_raw |>
+  pivot_longer(all_of(f1_series), names_to = "source", values_to = "fires") |>
+  filter(trimws(fires) != "") |>
+  rename(year = Year) |>
+  arrange(match(source, f1_series), match(year, f1_raw$Year)) |>
+  select(year, source, fires)
 
-# The output name below is a placeholder. Rename it for what the figure
-# actually carries, the way river_flooding_magnitude.csv does.
-write_csv_stable(f1, file.path(out_dir, "wildfires_fig1.csv"))
+assert_conservation(f1_raw, f1_series, nrow(f1), "wildfires_fig-1.csv")
+
+write_csv_stable(f1, file.path(out_dir, "wildfires_frequency.csv"))
 
 # ---- Figure 2: Wildfire Extent in the United States, 1983-2022 ----
 
@@ -78,26 +75,26 @@ f2_path <- file.path(raw_dir, "wildfires_fig-2.csv")
 f2_meta <- read_epa_preamble(f2_path)
 f2_raw  <- read_epa_csv(f2_path)
 
-# All columns are listed as expected headers so a rename or reorder stops the
-# build from the first run. When you write the reshape, move the identifier
-# columns into id_cols so the split between keys and series is explicit.
+f2_series <- c("National Interagency Fire Center", "Forest Service Wildfire Statistics")
+
 assert_headers(
   f2_raw,
-  id_cols          = character(),
-  expected_headers = c("Year", "National Interagency Fire Center", "Forest Service Wildfire Statistics"),
+  id_cols          = "Year",
+  expected_headers = f2_series,
   what             = "wildfires_fig-2.csv"
 )
 
-# TODO reshape: 40 rows, Year + 2 series.
-# Source headers: Year | National Interagency Fire Center | Forest Service Wildfire Statistics
-# Units line: acres
-# Produce a tidy long-format data frame. Keep every value as character: the
-# source carries up to 10 significant digits and must survive byte for byte.
-f2 <- todo_reshape(2)
+# Same partial coverage as figure 1; see the note there.
+f2 <- f2_raw |>
+  pivot_longer(all_of(f2_series), names_to = "source", values_to = "acres") |>
+  filter(trimws(acres) != "") |>
+  rename(year = Year) |>
+  arrange(match(source, f2_series), match(year, f2_raw$Year)) |>
+  select(year, source, acres)
 
-# The output name below is a placeholder. Rename it for what the figure
-# actually carries, the way river_flooding_magnitude.csv does.
-write_csv_stable(f2, file.path(out_dir, "wildfires_fig2.csv"))
+assert_conservation(f2_raw, f2_series, nrow(f2), "wildfires_fig-2.csv")
+
+write_csv_stable(f2, file.path(out_dir, "wildfires_extent.csv"))
 
 # ---- Figure 3: Damage Caused by Wildfires in the United States, 1984-2021 ----
 
@@ -105,26 +102,26 @@ f3_path <- file.path(raw_dir, "wildfires_fig-3.csv")
 f3_meta <- read_epa_preamble(f3_path)
 f3_raw  <- read_epa_csv(f3_path)
 
-# All columns are listed as expected headers so a rename or reorder stops the
-# build from the first run. When you write the reshape, move the identifier
-# columns into id_cols so the split between keys and series is explicit.
+# Burn-severity classes, kept in EPA's published column order rather than
+# alphabetised, because the order is the severity gradient the figure stacks.
+f3_severity <- c("Low", "Moderate", "High", "Unburned", "Increased greenness")
+
 assert_headers(
   f3_raw,
-  id_cols          = character(),
-  expected_headers = c("Year", "Low", "Moderate", "High", "Unburned", "Increased greenness"),
+  id_cols          = "Year",
+  expected_headers = f3_severity,
   what             = "wildfires_fig-3.csv"
 )
 
-# TODO reshape: 38 rows, Year + 5 series.
-# Source headers: Year | Low | Moderate | High | Unburned | Increased greenness
-# Units line: acres
-# Produce a tidy long-format data frame. Keep every value as character: the
-# source carries up to 10 significant digits and must survive byte for byte.
-f3 <- todo_reshape(3)
+f3 <- f3_raw |>
+  pivot_longer(all_of(f3_severity), names_to = "severity", values_to = "acres") |>
+  rename(year = Year) |>
+  arrange(match(severity, f3_severity), match(year, f3_raw$Year)) |>
+  select(year, severity, acres)
 
-# The output name below is a placeholder. Rename it for what the figure
-# actually carries, the way river_flooding_magnitude.csv does.
-write_csv_stable(f3, file.path(out_dir, "wildfires_fig3.csv"))
+assert_conservation(f3_raw, f3_severity, nrow(f3), "wildfires_fig-3.csv")
+
+write_csv_stable(f3, file.path(out_dir, "wildfires_burn_severity.csv"))
 
 # ---- Figure 4: Average Annual Burned Acreage by State, 1984-2021 ----
 
@@ -132,30 +129,70 @@ f4_path <- file.path(raw_dir, "wildfires_fig-4.csv")
 f4_meta <- read_epa_preamble(f4_path)
 f4_raw  <- read_epa_csv(f4_path)
 
-# All columns are listed as expected headers so a rename or reorder stops the
-# build from the first run. When you write the reshape, move the identifier
-# columns into id_cols so the split between keys and series is explicit.
+# One column per state, in EPA's published order. Not all 50 appear: states with
+# too little burned area for a reliable trend are absent from the source file.
+f4_states <- c(
+  "AL", "AK", "AZ", "AR", "CA", "CO", "DE", "FL", "GA", "HI", "ID", "IN", "IA",
+  "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV",
+  "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "SC", "SD", "TN", "TX",
+  "UT", "VA", "WA", "WV", "WI", "WY"
+)
+
 assert_headers(
   f4_raw,
-  id_cols          = character(),
-  expected_headers = c("Year/Trend", "AL", "AK", "AZ", "AR", "CA", "CO", "DE", "FL", "GA", "HI", "ID", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "SC", "SD", "TN", "TX", "UT", "VA", "WA", "WV", "WI", "WY"),
+  id_cols          = "Year/Trend",
+  expected_headers = f4_states,
   what             = "wildfires_fig-4.csv"
 )
 
-# TODO reshape: 39 rows, Year/Trend/AL/AK/AZ/AR/CA/CO/DE/FL/GA/HI/ID/IN/IA/KS/KY/LA/ME/MD/MA/MI/MN/MS/MO/MT/NE/NV/NJ/NM/NY/NC/ND/OH/OK/OR/PA/SC/SD/TN/TX/UT/VA/WA/WV/WI/WY.
-# Source headers: Year/Trend | AL | AK | AZ | AR | CA | CO | DE | FL | GA | HI | ID | IN | IA | KS | KY | LA | ME | MD | MA | MI | MN | MS | MO | MT | NE | NV | NJ | NM | NY | NC | ND | OH | OK | OR | PA | SC | SD | TN | TX | UT | VA | WA | WV | WI | WY
-# Units line: acres per square mile of land area (trend); acres (annual data)
-# NOTE: this Units: line carries more than one unit, one per series, but the
-#   meta.yml `unit:` field below is single-valued. Either carry the unit as a
-#   column of the output data (as `unit`) and set `unit:` to a summary, or
-#   split the figure into one output file per series.
-# Produce a tidy long-format data frame. Keep every value as character: the
-# source carries up to 10 significant digits and must survive byte for byte.
-f4 <- todo_reshape(4)
+# This file stacks two different measures under one header row. Its first row is
+# labelled "Trend" and carries a rate in acres per square mile of land area; the
+# 38 rows below it carry annual burned acreage in acres. They are different
+# quantities on different keys, and data/meta.yml documents one unit per file, so
+# they are written as two files rather than one file with a unit column.
+F4_TREND_ROW <- "Trend"
+f4_years <- setdiff(f4_raw[["Year/Trend"]], F4_TREND_ROW)
 
-# The output name below is a placeholder. Rename it for what the figure
-# actually carries, the way river_flooding_magnitude.csv does.
-write_csv_stable(f4, file.path(out_dir, "wildfires_fig4.csv"))
+if (!identical(f4_raw[["Year/Trend"]][1], F4_TREND_ROW)) {
+  stop(
+    "wildfires_fig-4.csv no longer starts with its '", F4_TREND_ROW, "' row.",
+    call. = FALSE
+  )
+}
+
+f4_long <- f4_raw |>
+  rename(period = `Year/Trend`) |>
+  pivot_longer(all_of(f4_states), names_to = "state", values_to = "value")
+
+f4_trend <- f4_long |>
+  filter(period == F4_TREND_ROW) |>
+  arrange(match(state, f4_states)) |>
+  select(state, acres_per_sq_mi = value)
+
+f4_annual <- f4_long |>
+  filter(period != F4_TREND_ROW) |>
+  rename(year = period) |>
+  arrange(match(state, f4_states), match(year, f4_years)) |>
+  select(state, year, acres = value)
+
+assert_conservation(
+  f4_raw, f4_states, nrow(f4_trend) + nrow(f4_annual), "wildfires_fig-4.csv"
+)
+
+write_csv_stable(f4_trend, file.path(out_dir, "wildfires_burned_acreage_trend_by_state.csv"))
+write_csv_stable(f4_annual, file.path(out_dir, "wildfires_burned_acreage_by_state.csv"))
+
+# EPA's own Units: line names both units, one per measure, separated by a
+# semicolon: "acres per square mile of land area (trend); acres (annual data)".
+# Splitting it here keeps both strings sourced from the file's preamble instead
+# of retyped, so a change upstream still cannot drift past this build.
+f4_units <- trimws(strsplit(f4_meta$units, ";", fixed = TRUE)[[1]])
+if (length(f4_units) != 2L) {
+  stop("wildfires_fig-4.csv: expected two units on its Units: line, got ",
+       length(f4_units), ".", call. = FALSE)
+}
+f4_trend_unit  <- trimws(sub("\\(trend\\)$", "", f4_units[1]))
+f4_annual_unit <- trimws(sub("\\(annual data\\)$", "", f4_units[2]))
 
 # ---- Figure 5: Change in Annual Burned Acreage by State Between 1984-2002 and 2003-2021 ----
 
@@ -163,53 +200,48 @@ f5_path <- file.path(raw_dir, "wildfires_fig-5.csv")
 f5_meta <- read_epa_preamble(f5_path)
 f5_raw  <- read_epa_csv(f5_path)
 
-# All columns are listed as expected headers so a rename or reorder stops the
-# build from the first run. When you write the reshape, move the identifier
-# columns into id_cols so the split between keys and series is explicit.
 assert_headers(
   f5_raw,
-  id_cols          = character(),
-  expected_headers = c("State", "Change in burned acreage"),
+  id_cols          = "State",
+  expected_headers = "Change in burned acreage",
   what             = "wildfires_fig-5.csv"
 )
 
-# TODO reshape: 45 rows, State + 1 series.
-# Source headers: State | Change in burned acreage
-# Units line: acres per square mile of land area
-# Produce a tidy long-format data frame. Keep every value as character: the
-# source carries up to 10 significant digits and must survive byte for byte.
-f5 <- todo_reshape(5)
+# Already one row per state, so the reshape is a rename. State order is EPA's
+# published order, preserved with match() rather than sorted, so no collation
+# locale can reorder it.
+f5 <- f5_raw |>
+  arrange(match(State, f5_raw$State)) |>
+  select(state = State, change_acres_per_sq_mi = `Change in burned acreage`)
 
-# The output name below is a placeholder. Rename it for what the figure
-# actually carries, the way river_flooding_magnitude.csv does.
-write_csv_stable(f5, file.path(out_dir, "wildfires_fig5.csv"))
+assert_conservation(f5_raw, "Change in burned acreage", nrow(f5), "wildfires_fig-5.csv")
 
-# ---- Figure 6: Comparison of Monthly Burned Area Due to Wildfires in the United States Between 1984–2002 and 2003–2021 ----
+write_csv_stable(f5, file.path(out_dir, "wildfires_burned_acreage_change_by_state.csv"))
+
+# ---- Figure 6: Comparison of Monthly Burned Area Due to Wildfires in the United States Between 1984-2002 and 2003-2021 ----
 
 f6_path <- file.path(raw_dir, "wildfires_fig-6.csv")
 f6_meta <- read_epa_preamble(f6_path)
 f6_raw  <- read_epa_csv(f6_path)
 
-# All columns are listed as expected headers so a rename or reorder stops the
-# build from the first run. When you write the reshape, move the identifier
-# columns into id_cols so the split between keys and series is explicit.
+f6_periods <- c("1984-2002", "2003-2021")
+
 assert_headers(
   f6_raw,
-  id_cols          = character(),
-  expected_headers = c("Month", "1984-2002", "2003-2021"),
+  id_cols          = "Month",
+  expected_headers = f6_periods,
   what             = "wildfires_fig-6.csv"
 )
 
-# TODO reshape: 12 rows, Month + 2 series.
-# Source headers: Month | 1984-2002 | 2003-2021
-# Units line: burned area (millions of acres per year)
-# Produce a tidy long-format data frame. Keep every value as character: the
-# source carries up to 10 significant digits and must survive byte for byte.
-f6 <- todo_reshape(6)
+f6 <- f6_raw |>
+  pivot_longer(all_of(f6_periods), names_to = "period", values_to = "million_acres") |>
+  rename(month = Month) |>
+  arrange(match(period, f6_periods), match(month, f6_raw$Month)) |>
+  select(month, period, million_acres)
 
-# The output name below is a placeholder. Rename it for what the figure
-# actually carries, the way river_flooding_magnitude.csv does.
-write_csv_stable(f6, file.path(out_dir, "wildfires_fig6.csv"))
+assert_conservation(f6_raw, f6_periods, nrow(f6), "wildfires_fig-6.csv")
+
+write_csv_stable(f6, file.path(out_dir, "wildfires_monthly_burned_area.csv"))
 
 # ---- Figure 7: Comparison of Monthly Burned Area Due to Wildfires in the Eastern and Western United States Between 1984-2002 and 2003-2021 ----
 
@@ -217,26 +249,33 @@ f7_path <- file.path(raw_dir, "wildfires_fig-7.csv")
 f7_meta <- read_epa_preamble(f7_path)
 f7_raw  <- read_epa_csv(f7_path)
 
-# All columns are listed as expected headers so a rename or reorder stops the
-# build from the first run. When you write the reshape, move the identifier
-# columns into id_cols so the split between keys and series is explicit.
+# Each header encodes a region and a period. They are split through this explicit
+# lookup rather than parsed out of the string, so a header EPA rewords fails the
+# assertion above instead of being silently re-parsed into the wrong cell.
+f7_series <- data.frame(
+  header = c("East (1984-2002)", "East (2003-2021)", "West (1984-2002)", "West (2003-2021)"),
+  region = c("East", "East", "West", "West"),
+  period = c("1984-2002", "2003-2021", "1984-2002", "2003-2021"),
+  stringsAsFactors = FALSE
+)
+
 assert_headers(
   f7_raw,
-  id_cols          = character(),
-  expected_headers = c("Month", "East (1984-2002)", "East (2003-2021)", "West (1984-2002)", "West (2003-2021)"),
+  id_cols          = "Month",
+  expected_headers = f7_series$header,
   what             = "wildfires_fig-7.csv"
 )
 
-# TODO reshape: 12 rows, Month + 4 series.
-# Source headers: Month | East (1984-2002) | East (2003-2021) | West (1984-2002) | West (2003-2021)
-# Units line: burned area (millions of acres per year)
-# Produce a tidy long-format data frame. Keep every value as character: the
-# source carries up to 10 significant digits and must survive byte for byte.
-f7 <- todo_reshape(7)
+f7 <- f7_raw |>
+  pivot_longer(all_of(f7_series$header), names_to = "header", values_to = "million_acres") |>
+  left_join(f7_series, by = "header") |>
+  rename(month = Month) |>
+  arrange(match(header, f7_series$header), match(month, f7_raw$Month)) |>
+  select(month, region, period, million_acres)
 
-# The output name below is a placeholder. Rename it for what the figure
-# actually carries, the way river_flooding_magnitude.csv does.
-write_csv_stable(f7, file.path(out_dir, "wildfires_fig7.csv"))
+assert_conservation(f7_raw, f7_series$header, nrow(f7), "wildfires_fig-7.csv")
+
+write_csv_stable(f7, file.path(out_dir, "wildfires_monthly_burned_area_by_region.csv"))
 
 # ---- Data dictionary ---------------------------------------------------------
 
@@ -244,16 +283,80 @@ col <- function(name, type, description) {
   list(name = name, type = type, description = description)
 }
 
-# One entry per output column, in order, filled from the data frame itself so it
-# cannot drift. `type` and `description` are deliberately blank: tests/test-data.R
-# fails while either is empty, so every column has to be documented by hand.
-describe <- function(df) lapply(names(df), function(nm) col(nm, "", ""))
+# Every column name any output file uses, documented once. describe() below fills
+# meta.yml from the data frame itself, so the dictionary cannot list a column the
+# file does not have, and an undocumented column stops the build instead of
+# reaching meta.yml with a blank description.
+#
+# Numeric columns are typed "number" but written as strings: they are reproduced
+# at EPA's published precision and never re-derived here.
+COLUMN_DOC <- list(
+  year = col(
+    "year", "integer",
+    "Calendar year, as published."
+  ),
+  month = col(
+    "month", "string",
+    "Calendar month name, in January-to-December order."
+  ),
+  state = col(
+    "state", "string",
+    "U.S. state. Two-letter postal abbreviation where the source uses one, full name where it does not."
+  ),
+  source = col(
+    "source", "string",
+    "Reporting series the value comes from, as EPA names it: National Interagency Fire Center or Forest Service Wildfire Statistics. The two are not directly comparable and do not cover the same years."
+  ),
+  severity = col(
+    "severity", "string",
+    "Burn-severity class assigned by MTBS: Low, Moderate, High, Unburned, or Increased greenness."
+  ),
+  region = col(
+    "region", "string",
+    "Half of the country the value covers, East or West."
+  ),
+  period = col(
+    "period", "string",
+    "Multi-year period the value averages over, 1984-2002 or 2003-2021."
+  ),
+  fires = col(
+    "fires", "number",
+    "Number of wildfires reported that year by that series."
+  ),
+  acres = col(
+    "acres", "number",
+    "Burned area in acres."
+  ),
+  acres_per_sq_mi = col(
+    "acres_per_sq_mi", "number",
+    "Trend in annual burned acreage over 1984-2021, in acres per square mile of land area."
+  ),
+  change_acres_per_sq_mi = col(
+    "change_acres_per_sq_mi", "number",
+    "Change in average annual burned acreage between 1984-2002 and 2003-2021, in acres per square mile of land area. Negative values are decreases."
+  ),
+  million_acres = col(
+    "million_acres", "number",
+    "Average burned area for that month, in millions of acres per year."
+  )
+)
+
+describe <- function(df, what) {
+  lapply(names(df), function(nm) {
+    entry <- COLUMN_DOC[[nm]]
+    if (is.null(entry)) {
+      stop("Column '", nm, "' of ", what,
+           " has no entry in COLUMN_DOC in R/build_data.R.", call. = FALSE)
+    }
+    entry
+  })
+}
 
 meta <- list(
   indicator = INDICATOR,
   datasets = list(
     list(
-      file            = "wildfires_fig1.csv",
+      file            = "wildfires_frequency.csv",
       figure          = "Figure 1",
       figure_title    = f1_meta$title,
       source_file     = "wildfires_fig-1.csv",
@@ -263,10 +366,10 @@ meta <- list(
       web_update      = f1_meta$web_update,
       unit            = f1_meta$units,
       rows            = nrow(f1),
-      columns         = describe(f1)
+      columns         = describe(f1, "wildfires_frequency.csv")
     ),
     list(
-      file            = "wildfires_fig2.csv",
+      file            = "wildfires_extent.csv",
       figure          = "Figure 2",
       figure_title    = f2_meta$title,
       source_file     = "wildfires_fig-2.csv",
@@ -276,10 +379,10 @@ meta <- list(
       web_update      = f2_meta$web_update,
       unit            = f2_meta$units,
       rows            = nrow(f2),
-      columns         = describe(f2)
+      columns         = describe(f2, "wildfires_extent.csv")
     ),
     list(
-      file            = "wildfires_fig3.csv",
+      file            = "wildfires_burn_severity.csv",
       figure          = "Figure 3",
       figure_title    = f3_meta$title,
       source_file     = "wildfires_fig-3.csv",
@@ -289,10 +392,10 @@ meta <- list(
       web_update      = f3_meta$web_update,
       unit            = f3_meta$units,
       rows            = nrow(f3),
-      columns         = describe(f3)
+      columns         = describe(f3, "wildfires_burn_severity.csv")
     ),
     list(
-      file            = "wildfires_fig4.csv",
+      file            = "wildfires_burned_acreage_trend_by_state.csv",
       figure          = "Figure 4",
       figure_title    = f4_meta$title,
       source_file     = "wildfires_fig-4.csv",
@@ -300,12 +403,25 @@ meta <- list(
       source_encoding = "UTF-8",
       data_source     = f4_meta$data_source,
       web_update      = f4_meta$web_update,
-      unit            = f4_meta$units,
-      rows            = nrow(f4),
-      columns         = describe(f4)
+      unit            = f4_trend_unit,
+      rows            = nrow(f4_trend),
+      columns         = describe(f4_trend, "wildfires_burned_acreage_trend_by_state.csv")
     ),
     list(
-      file            = "wildfires_fig5.csv",
+      file            = "wildfires_burned_acreage_by_state.csv",
+      figure          = "Figure 4",
+      figure_title    = f4_meta$title,
+      source_file     = "wildfires_fig-4.csv",
+      source_sha256   = file_sha256(f4_path),
+      source_encoding = "UTF-8",
+      data_source     = f4_meta$data_source,
+      web_update      = f4_meta$web_update,
+      unit            = f4_annual_unit,
+      rows            = nrow(f4_annual),
+      columns         = describe(f4_annual, "wildfires_burned_acreage_by_state.csv")
+    ),
+    list(
+      file            = "wildfires_burned_acreage_change_by_state.csv",
       figure          = "Figure 5",
       figure_title    = f5_meta$title,
       source_file     = "wildfires_fig-5.csv",
@@ -315,10 +431,10 @@ meta <- list(
       web_update      = f5_meta$web_update,
       unit            = f5_meta$units,
       rows            = nrow(f5),
-      columns         = describe(f5)
+      columns         = describe(f5, "wildfires_burned_acreage_change_by_state.csv")
     ),
     list(
-      file            = "wildfires_fig6.csv",
+      file            = "wildfires_monthly_burned_area.csv",
       figure          = "Figure 6",
       figure_title    = f6_meta$title,
       source_file     = "wildfires_fig-6.csv",
@@ -328,10 +444,10 @@ meta <- list(
       web_update      = f6_meta$web_update,
       unit            = f6_meta$units,
       rows            = nrow(f6),
-      columns         = describe(f6)
+      columns         = describe(f6, "wildfires_monthly_burned_area.csv")
     ),
     list(
-      file            = "wildfires_fig7.csv",
+      file            = "wildfires_monthly_burned_area_by_region.csv",
       figure          = "Figure 7",
       figure_title    = f7_meta$title,
       source_file     = "wildfires_fig-7.csv",
@@ -341,7 +457,7 @@ meta <- list(
       web_update      = f7_meta$web_update,
       unit            = f7_meta$units,
       rows            = nrow(f7),
-      columns         = describe(f7)
+      columns         = describe(f7, "wildfires_monthly_burned_area_by_region.csv")
     )
   )
 )
@@ -355,5 +471,5 @@ invisible(lapply(written, assert_clean_output))
 
 cat("\nWrote:\n")
 for (p in written) {
-  cat(sprintf("  %-34s %8d bytes  %s\n", basename(p), file.size(p), substr(file_sha256(p), 1, 12)))
+  cat(sprintf("  %-46s %8d bytes  %s\n", basename(p), file.size(p), substr(file_sha256(p), 1, 12)))
 }
